@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block content_header %}Rejestracja{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+        {{ form_row(form.login) }}
+        {{ form_row(form.plainPassword.first) }}
+        {{ form_row(form.plainPassword.second) }}
+        {{ form_row(form.email) }}
+
+        <button type="submit">Zarejestruj!</button>
+    {{ form_end(form) }}
+{% endblock %}

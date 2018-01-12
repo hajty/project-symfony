@@ -12,13 +12,14 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
-class BaseContoller extends Controller
+class HomeController extends Controller
 {
     /**
      * @Route("/")
      */
     public function show()
     {
-        return $this->render('base.html.twig');
+        $homeClass = "selected";
+        return $this->render('base.html.twig', Array('homeClass' => $homeClass));
     }
 }
