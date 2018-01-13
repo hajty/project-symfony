@@ -1,13 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block content_header %}Rejestracja{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="css/register.css" type="text/css"/>
+{% endblock %}
+
+{% block content_header %}<h3>Rejestracja</h3>{% endblock %}
 {% block content %}
     {{ form_start(form) }}
-        {{ form_row(form.login) }}
-        {{ form_row(form.plainPassword.first) }}
-        {{ form_row(form.plainPassword.second) }}
-        {{ form_row(form.email) }}
-
-        <button type="submit">Zarejestruj!</button>
+    <div id="form">
+        <div id="login">
+            {{ form_label(form.login, 'Login: ') }}
+            {{ form_widget(form.login) }}
+            {{ form_errors(form.login) }}
+        </div>
+        <div id="password">
+            <div id="first">
+                {{ form_label(form.plainPassword.first) }}
+                {{ form_widget(form.plainPassword.first) }}
+            </div>
+            <div id="second">
+                {{ form_label(form.plainPassword.second) }}
+                {{ form_widget(form.plainPassword.second) }}
+            </div>
+            {{ form_errors(form.plainPassword) }}
+        </div>
+        <div id="email">
+            {{ form_label(form.email, 'Adres e-mail: ') }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+        </div>
+        <div id="submit">
+            <button type="submit">Zarejestruj!</button>
+        </div>
+    </div>
     {{ form_end(form) }}
 {% endblock %}

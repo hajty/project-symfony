@@ -128,6 +128,14 @@ ul.menu li a:hover {
     text-align: center;
 }
 
+#content_header {
+    border-bottom: solid 2px #E3620D;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 0 0 15px;
+    text-align: left;
+}
+
 .sidebar {
     border: solid 2px #000000;
     background: url("../../images/content_background.png");
