@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UserController extends Controller
 {
@@ -40,7 +41,6 @@ class UserController extends Controller
                 {
                     $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
                     $user->setPassword($password);
-                    $user->setAdminFlag(false);
 
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($user);
@@ -77,24 +77,23 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/login", name="user_login")
+     * @Route("/login", name="login")
      */
-    public function loginAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function loginAction(Request $request, AuthenticationUtils $authUtils)
     {
         $user = new User();
         $form = $this->createForm(LoginType::class, $user);
+        $error = $authUtils->getLastAuthenticationError();                  // get the login error if there is one
+        $lastUsername = $authUtils->getLastUsername();                      // last username entered by the user
 
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-
-        }
 
         return $this->render(
             'login.html.twig',
             array(
                 'form' => $form->createView(),
+                'last_username' => $lastUsername,
+                'error'         => $error,
             )
         );
     }

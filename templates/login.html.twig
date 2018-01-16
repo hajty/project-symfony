@@ -2,22 +2,29 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="css/account.css" type="text/css"/>
+    <link rel="stylesheet" href="css/form.css" type="text/css"/>
 {% endblock %}
 
 {% block content_header %}<h3>Logowanie</h3>{% endblock %}
 {% block content %}
-    {{ form_start(form) }}
+    {{ form_start(form, {'action': path('login_check')}) }}
+
+    {% set username = last_username %}
     <div id="form">
         <div id="login">
             {{ form_label(form.login, 'Login: ') }}
-            {{ form_widget(form.login) }}
+            {{ form_widget(form.login, {'attr': {'name': 'login', 'value': (username)}}) }}
             {{ form_errors(form.login) }}
         </div>
         <div id="password">
-            {{ form_label(form.plainPassword, 'Hasło: ') }}
-            {{ form_widget(form.plainPassword) }}
-            {{ form_errors(form.plainPassword) }}
+            {{ form_label(form.password, 'Hasło: ') }}
+            {{ form_widget(form.password, {'attr': {'name': 'password'}}) }}
+            {{ form_errors(form.password) }}
+        </div>
+        <div id="remember_me">
+            {{ form_widget(form.remember_me) }}
+            {{ form_label(form.remember_me, 'Zapamiętaj mnie') }}
+            {{ form_errors(form.remember_me) }}
         </div>
         <div id="submit">
             <button type="submit">Zaloguj</button>
@@ -25,9 +32,9 @@
     </div>
     {{ form_end(form) }}
 
-    {% for message in app.flashes('info') %}
-        <div class="info">
-            {{ message }}
+    {% if error %}
+        <div class="error">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
         </div>
-    {% endfor %}
+    {% endif %}
 {% endblock %}

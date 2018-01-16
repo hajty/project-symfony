@@ -17,8 +17,24 @@ class HomeController extends Controller
     /**
      * @Route("/")
      */
-    public function show()
+    public function homepage()
     {
         return $this->render('base.html.twig', Array());
+    }
+
+    /**
+     * @Route("/user")
+     */
+    public function userpage()
+    {
+        return $this->render('user.html.twig', Array());
+    }
+
+    /**
+     * @Route("/admin")
+     */
+    public function adminpage()
+    {
+        return $this->render('admin.html.twig', Array());
     }
 }

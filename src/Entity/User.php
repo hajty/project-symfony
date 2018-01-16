@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -41,8 +40,15 @@ class User implements UserInterface, \Serializable
      */
     private $email;
 
-    /** @ORM\Column(name="admin_flag", type="boolean", options={"default":false}) */
-    private $adminFlag;
+    private $rememberMe;
+
+    /** @ORM\Column(type="array") */
+    private $roles;
+
+    public function __construct()
+    {
+        $this->roles = Array('ROLE_USER');
+    }
 
     public function getId()
     {
@@ -89,14 +95,24 @@ class User implements UserInterface, \Serializable
         $this->email = $email;
     }
 
-    public function getAdminFlag()
+    public function getRoles()
     {
-        return $this->adminFlag;
+        return $this->roles;
     }
 
-    public function setAdminFlag($adminFlag)
+    public function setRoles(array $roles)
     {
-        $this->adminFlag = $adminFlag;
+        $this->roles = $roles;
+    }
+
+    public function getRememberMe()
+    {
+        return $this->rememberMe;
+    }
+
+    public function setRememberMe($rememberMe)
+    {
+        $this->rememberMe = $rememberMe;
     }
 
     public function serialize()
@@ -114,12 +130,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->login,
             $this->password
-            ) = $this->unserialize($serialized);
-    }
-
-    public function getRoles()
-    {
-        return array('ROLE_USER');
+            ) = unserialize($serialized);
     }
 
     /**
