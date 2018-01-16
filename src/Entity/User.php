@@ -44,14 +44,6 @@ class User implements UserInterface, \Serializable
     /** @ORM\Column(name="admin_flag", type="boolean", options={"default":false}) */
     private $adminFlag;
 
-    /** @ORM\Column(name="is_active", type="boolean") */
-    private $isActive;
-
-    public function __construct()
-    {
-        $this->isActive = true;
-    }
-
     public function getId()
     {
         return $this->id;

@@ -19,7 +19,6 @@ class HomeController extends Controller
      */
     public function show()
     {
-        $homeClass = "selected";
-        return $this->render('base.html.twig', Array('homeClass' => $homeClass));
+        return $this->render('base.html.twig', Array());
     }
 }

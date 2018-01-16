@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="css/account.css" type="text/css"/>
 {% endblock %}
 
-{% block content_header %}<h3>Rejestracja</h3>{% endblock %}
+{% block content_header %}<h3>Logowanie</h3>{% endblock %}
 {% block content %}
     {{ form_start(form) }}
     <div id="form">
@@ -15,23 +15,12 @@
             {{ form_errors(form.login) }}
         </div>
         <div id="password">
-            <div id="first">
-                {{ form_label(form.plainPassword.first) }}
-                {{ form_widget(form.plainPassword.first) }}
-            </div>
-            <div id="second">
-                {{ form_label(form.plainPassword.second) }}
-                {{ form_widget(form.plainPassword.second) }}
-            </div>
+            {{ form_label(form.plainPassword, 'Hasło: ') }}
+            {{ form_widget(form.plainPassword) }}
             {{ form_errors(form.plainPassword) }}
         </div>
-        <div id="email">
-            {{ form_label(form.email, 'Adres e-mail: ') }}
-            {{ form_widget(form.email) }}
-            {{ form_errors(form.email) }}
-        </div>
         <div id="submit">
-            <button type="submit">Zarejestruj!</button>
+            <button type="submit">Zaloguj</button>
         </div>
     </div>
     {{ form_end(form) }}
