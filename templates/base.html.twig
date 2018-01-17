@@ -15,22 +15,36 @@
                         <ul class="menu">
                             <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
                             <li class=""><a href="/">Strona Główna</a></li>
-                            <li class=""><a href="/news">News</a></li>
-                            <li class=""><a href="page.html">A Page</a></li>
-                            <li class=""><a href="another_page.html">Another Page</a></li>
-                            <li class=""><a href="contact.html">Contact Us</a></li>
+                            <li class=""><a href="/news">Newsy</a></li>
                         </ul>
                         <ul class="menu" id="menu_login">
-                            <li><a href="/login">Zaloguj</a></li>
-                            <li><a href="/register">Zarejestruj</a></li>
+                            {% if not is_granted('ROLE_USER') %}
+                                <li><a href="/login">Zaloguj</a></li>
+                                <li><a href="/register">Zarejestruj</a></li>
+                            {% else %}
+                                <li><a href="/user">Panel użytkownika</a></li>
+                                <li><a href="/logout">Wyloguj</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
                 <div id="site_content">
                     <div id="sidebar_container">
+                        {% block userpanel %}
+                        {% if is_granted('ROLE_USER')  %}
                         <div class="sidebar">
                             <div class="sidebar_top">
-                                <h3>Latest News</h3>
+                                <h3>Panel Użytkownika</h3>
+                            </div>
+                            <div class="sidebar_item" id="panel">
+                                Witaj {{ username }}!
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endblock %}
+                        <div class="sidebar">
+                            <div class="sidebar_top">
+                                <h3>Ankieta</h3>
                             </div>
                             <div class="sidebar_item">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
@@ -62,7 +76,7 @@
                 </div>
                 <div id="footer">
                     <div id="footer_content">
-                    <p><a href="/">Home</a> | <a href="examples.html">Examples</a> | <a href="page.html">A Page</a> | <a href="another_page.html">Another Page</a> | <a href="contact.html">Contact Us</a></p>
+                    <p><a href="/">Strona Główna</a> | <a href="/news">Newsy</a>  | <a href="/contact">Kontakt</a></p>
                     <p>Copyright &copy; GamePlace 2018</p>
                     </div>
                 </div>

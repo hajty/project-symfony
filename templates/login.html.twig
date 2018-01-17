@@ -7,6 +7,7 @@
 
 {% block content_header %}<h3>Logowanie</h3>{% endblock %}
 {% block content %}
+    {% block userpanel %}{% endblock %}
     {{ form_start(form, {'action': path('login_check')}) }}
 
     {% set username = last_username %}
@@ -22,7 +23,7 @@
             {{ form_errors(form.password) }}
         </div>
         <div id="remember_me">
-            {{ form_widget(form.remember_me) }}
+            {{ form_widget(form.remember_me, {'attr': {'full_name': '_remember_me'}}) }}
             {{ form_label(form.remember_me, 'Zapamiętaj mnie') }}
             {{ form_errors(form.remember_me) }}
         </div>

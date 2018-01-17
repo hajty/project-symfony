@@ -52,6 +52,6 @@ button {
     margin: 15px 0px 15px 0px;
 }
 
-#remember_me{
-    float: left;
+#remember_me {
+    text-align: center;
 }

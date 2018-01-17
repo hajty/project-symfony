@@ -17,6 +17,11 @@ security:
         main:
             pattern:    ^/
             provider: db_provider
+            remember_me:
+                    secret:   '%kernel.secret%'
+                    lifetime: 604800 # 1 week in seconds
+                    path:     /
+                    remember_me_parameter: 'login[remember_me]'
 
             # activate different ways to authenticate
 
@@ -38,7 +43,7 @@ security:
 
                     # login success redirecting options (read further below)
                     always_use_default_target_path: false
-                    default_target_path:            /user
+                    default_target_path:            /
                     target_path_parameter:          _target_path
                     use_referer:                    false
 
@@ -56,12 +61,6 @@ security:
                     # by default, the login form *must* be a POST, not a GET
                     post_only:      true
                     remember_me:    true
-
-            remember_me:
-                  secret:   '%kernel.secret%'
-                  lifetime: 604800 # 1 week in seconds
-                  path:     /
-                  remember_me_parameter: remember_me
 
             logout:
                     path: /logout

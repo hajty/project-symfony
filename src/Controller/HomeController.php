@@ -9,17 +9,26 @@
 namespace App\Controller;
 
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class HomeController extends Controller
 {
+
+    private $username;
+
     /**
      * @Route("/")
      */
-    public function homepage()
+    public function homepage(AuthorizationCheckerInterface $authChecker)
     {
-        return $this->render('base.html.twig', Array());
+        if ($authChecker->isGranted('ROLE_USER'))
+        {
+            $this->username = $this->getUser()->getLogin();
+        }
+        return $this->render('base.html.twig', Array('username' => $this->username));
     }
 
     /**
@@ -27,7 +36,7 @@ class HomeController extends Controller
      */
     public function userpage()
     {
-        return $this->render('user.html.twig', Array());
+        return $this->render('user.html.twig', Array('username' => $this->username));
     }
 
     /**
@@ -35,6 +44,6 @@ class HomeController extends Controller
      */
     public function adminpage()
     {
-        return $this->render('admin.html.twig', Array());
+        return $this->render('admin.html.twig', Array('username' => $this->username));
     }
 }
