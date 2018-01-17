@@ -1,11 +1,27 @@
 #news {
-    display:block;
+    padding: 0 0 15px 0;
+}
+
+#new {
+    padding: 0 0 10px 0;
+}
+
+#title {
+
+}
+
+#text {
+    padding: 0 0 5px 0;
 }
 
 #author {
     float: right;
+    font-style: italic;
+    font-weight: bold;
 }
 
 #date {
-    float: right;
+    float: left;
+    font-style: italic;
+    font-weight: bold;
 }

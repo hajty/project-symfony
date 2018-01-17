@@ -9,18 +9,21 @@
 {% block content %}
     <div id="news">
     {% for new in news|reverse %}
-         <div class="news" id="title">
-        <h4>{{ new.title }}</h4>
-         </div>
-        <div class="news" id="text">
-         {{ new.text }}
-        </div>
-        <div class="news" id="author">
-        {{ new.author }}
-        </div>
-        <div class="news" id="date">
-        {{ new.data|date('d/m/Y') }}
+        <div id="new">
+            <div id="title">
+                <h4>{{ new.title }}</h4>
+            </div>
+            <div id="text">
+                {{ new.text }}
+            </div>
+            <div id="author">
+                Autor: {{ new.author }}
+            </div>
+            <div id="date">
+                Data: {{ new.data|date('d/m/Y') }}
+            </div>
         </div>
     {% endfor %}
+
     </div>
 {% endblock %}
