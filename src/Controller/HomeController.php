@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use App\Entity\News;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,34 +17,59 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class HomeController extends Controller
 {
-
-    private $username;
-
     /**
      * @Route("/")
      */
     public function homepage(AuthorizationCheckerInterface $authChecker)
     {
+        $username = "";
         if ($authChecker->isGranted('ROLE_USER'))
         {
-            $this->username = $this->getUser()->getLogin();
+            $username = $this->getUser()->getLogin();
         }
-        return $this->render('base.html.twig', Array('username' => $this->username));
+        return $this->render('base.html.twig', Array('username' => $username));
+    }
+
+    /**
+     * @Route("/news")
+     */
+    public function newspage(AuthorizationCheckerInterface $authChecker)
+    {
+        $username = "";
+        if ($authChecker->isGranted('ROLE_USER'))
+        {
+            $username = $this->getUser()->getLogin();
+        }
+
+        $news = $this->getDoctrine()->getManager()->getRepository(News::class)->findAll();
+
+        return $this->render('news.html.twig', Array('username' => $username,
+                                                           'news' => $news));
     }
 
     /**
      * @Route("/user")
      */
-    public function userpage()
+    public function userpage(AuthorizationCheckerInterface $authChecker)
     {
-        return $this->render('user.html.twig', Array('username' => $this->username));
+        $username = "";
+        if ($authChecker->isGranted('ROLE_USER'))
+        {
+            $username = $this->getUser()->getLogin();
+        }
+        return $this->render('user.html.twig', Array('username' => $username));
     }
 
     /**
      * @Route("/admin")
      */
-    public function adminpage()
+    public function adminpage(AuthorizationCheckerInterface $authChecker)
     {
-        return $this->render('admin.html.twig', Array('username' => $this->username));
+        $username = "";
+        if ($authChecker->isGranted('ROLE_USER'))
+        {
+            $username = $this->getUser()->getLogin();
+        }
+        return $this->render('admin.html.twig', Array('username' => $username));
     }
 }

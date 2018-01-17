@@ -1,0 +1,11 @@
+#news {
+    display:block;
+}
+
+#author {
+    float: right;
+}
+
+#date {
+    float: right;
+}

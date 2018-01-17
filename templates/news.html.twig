@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="css/news.css" type="text/css"/>
+{% endblock %}
+
+{% block content_header %}<h3>News</h3>{% endblock %}
+{% block content %}
+    <div id="news">
+    {% for new in news|reverse %}
+         <div class="news" id="title">
+        <h4>{{ new.title }}</h4>
+         </div>
+        <div class="news" id="text">
+         {{ new.text }}
+        </div>
+        <div class="news" id="author">
+        {{ new.author }}
+        </div>
+        <div class="news" id="date">
+        {{ new.data|date('d/m/Y') }}
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
