@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/form.css" type="text/css"/>
+{% endblock %}
+
+{% block content_header %}<h3>Dodaj newsa</h3>{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div id="form">
+        <div id="title">
+            {{ form_label(form.title, 'Tytuł:') }}
+            {{ form_widget(form.title) }}
+            {{ form_errors(form.title) }}
+        </div>
+        <div id="text">
+            {{ form_label(form.text, 'Treść:') }}
+            {{ form_widget(form.text) }}
+            {{ form_errors(form.text) }}
+        </div>
+        <div id="submit">
+            <button type="submit">Dodaj</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

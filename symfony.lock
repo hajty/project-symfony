@@ -56,6 +56,9 @@
     "doctrine/orm": {
         "version": "v2.6.0"
     },
+    "jbroadway/urlify": {
+        "version": "1.1.0-stable"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },

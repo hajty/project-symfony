@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}GamersPlace - Twoje miejsce dla graczy{% endblock %}</title>
         {% block stylesheets %}
-            <link rel="stylesheet" href="css/style.css" type="text/css" />
+            <link rel="stylesheet" href="/css/style.css" type="text/css" />
         {% endblock %}
     </head>
     <body>
@@ -22,6 +22,9 @@
                                 <li><a href="/login">Zaloguj</a></li>
                                 <li><a href="/register">Zarejestruj</a></li>
                             {% else %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li><a href="/admin">Panel admina</a></li>
+                                    {% endif %}
                                 <li><a href="/user">Panel użytkownika</a></li>
                                 <li><a href="/logout">Wyloguj</a></li>
                             {% endif %}
@@ -38,6 +41,8 @@
                             </div>
                             <div class="sidebar_item" id="panel">
                                 Witaj {{ username }}!
+                                <br /><br />
+                                <a href="/user/change-password">Zmień hasło</a>
                             </div>
                         </div>
                         {% endif %}
@@ -80,7 +85,7 @@
                 </div>
                 <div id="footer">
                     <div id="footer_content">
-                    <p><a href="/">Strona Główna</a> | <a href="/news">Newsy</a>  | <a href="/contact">Kontakt</a></p>
+                    <p><a href="/">Strona Główna</a> | <a href="/news">Newsy</a></p>
                     <p>Copyright &copy; GamePlace 2018</p>
                     </div>
                 </div>

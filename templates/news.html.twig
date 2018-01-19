@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="css/news.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/news.css" type="text/css"/>
 {% endblock %}
 
 {% block content_header %}<h3>News</h3>{% endblock %}
@@ -11,19 +11,24 @@
     {% for new in news|reverse %}
         <div id="new">
             <div id="title">
-                <h4>{{ new.title }}</h4>
+                <h4><a href="{{ new.titleRaw }}">{{ new.title }}</a></h4>
             </div>
             <div id="text">
-                {{ new.text }}
+                {% if new.text|length > 60 %}
+                    {{ new.text|slice(0, 255) }}...
+                {% else %}
+                    {{ new.text }}
+                {% endif %}
             </div>
-            <div id="author">
-                Autor: {{ new.author }}
-            </div>
-            <div id="date">
-                Data: {{ new.data|date('d/m/Y') }}
-            </div>
+            {% if is_granted('ROLE_ADMIN')  %}
+                <div id="button">
+                <a href="/news/delete/{{ new.titleRaw }}" class="button" id="delete">Usuń</a>
+                </div>
+            {% endif %}
         </div>
     {% endfor %}
-
+    {% if is_granted('ROLE_ADMIN')  %}
+        <a href="/news/add" class="button" id="add">Dodaj Newsa</a>
+        {% endif %}
     </div>
 {% endblock %}

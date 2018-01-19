@@ -22,7 +22,12 @@ class News
     private $title;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
+     */
+    private $title_raw;
+
+    /**
+     * @ORM\Column(type="string")
      */
     private $author;
 
@@ -34,7 +39,7 @@ class News
     /**
      * @ORM\Column(type="date")
      */
-    private $data;
+    private $date;
 
     /**
      * @return mixed
@@ -66,6 +71,22 @@ class News
     public function setTitle($title): void
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitleRaw()
+    {
+        return $this->title_raw;
+    }
+
+    /**
+     * @param mixed $title_raw
+     */
+    public function setTitleRaw($title_raw): void
+    {
+        $this->title_raw = $title_raw;
     }
 
     /**
@@ -103,16 +124,16 @@ class News
     /**
      * @return mixed
      */
-    public function getData()
+    public function getDate()
     {
-        return $this->data;
+        return $this->date;
     }
 
     /**
-     * @param mixed $data
+     * @param mixed $date
      */
-    public function setData($data): void
+    public function setData($date): void
     {
-        $this->data = $data;
+        $this->date = $date;
     }
 }

@@ -141,6 +141,7 @@ ul.menu li a:hover {
     background: url("../../images/content_background.png");
     float: right;
     margin: 0 0 20px 0;
+    width: 220px;
 }
 
 #panel{
