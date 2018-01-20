@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}GamersPlace - Twoje miejsce dla graczy{% endblock %}</title>
         {% block stylesheets %}
-            <link rel="stylesheet" href="/css/style.css" type="text/css" />
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css" />
         {% endblock %}
     </head>
     <body>
@@ -14,19 +14,19 @@
                     <div id="menubar">
                         <ul class="menu">
                             <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-                            <li class=""><a href="/">Strona Główna</a></li>
-                            <li class=""><a href="/news">Newsy</a></li>
+                            <li class=""><a href="{{ url('homepage') }}">Strona Główna</a></li>
+                            <li class=""><a href="{{ url('newspage') }}">Newsy</a></li>
                         </ul>
                         <ul class="menu" id="menu_login">
                             {% if not is_granted('ROLE_USER') %}
-                                <li><a href="/login">Zaloguj</a></li>
-                                <li><a href="/register">Zarejestruj</a></li>
+                                <li><a href="{{ url('user_login') }}">Zaloguj</a></li>
+                                <li><a href="{{ url('user_registration') }}">Zarejestruj</a></li>
                             {% else %}
                                 {% if is_granted('ROLE_ADMIN') %}
-                                    <li><a href="/admin">Panel admina</a></li>
+                                    <li><a href="{{ url('adminpage') }}">Panel admina</a></li>
                                     {% endif %}
-                                <li><a href="/user">Panel użytkownika</a></li>
-                                <li><a href="/logout">Wyloguj</a></li>
+                                <li><a href="{{ url('userpage') }}">Panel użytkownika</a></li>
+                                <li><a href="{{ url('logout') }}">Wyloguj</a></li>
                             {% endif %}
                         </ul>
                     </div>
@@ -42,7 +42,8 @@
                             <div class="sidebar_item" id="panel">
                                 Witaj {{ username }}!
                                 <br /><br />
-                                <a href="/user/change-password">Zmień hasło</a>
+                                <a href="{{ url('user_change-password') }}">Zmień hasło</a><br />
+                                <a href="{{ url('user_change-email') }}">Zmień e-mail</a>
                             </div>
                         </div>
                         {% endif %}
@@ -85,7 +86,7 @@
                 </div>
                 <div id="footer">
                     <div id="footer_content">
-                    <p><a href="/">Strona Główna</a> | <a href="/news">Newsy</a></p>
+                    <p><a href="{{ url('homepage') }}">Strona Główna</a> | <a href="{{ url('newspage') }}">Newsy</a></p>
                     <p>Copyright &copy; GamePlace 2018</p>
                     </div>
                 </div>

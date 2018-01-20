@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/news.css') }}" type="text/css"/>
+{% endblock %}
+
+{% block content_header %}<h3>{{ new.title }}</h3>{% endblock %}
+{% block content %}
+            <div id="new">
+                <div id="text">
+                    {{ new.text }}
+                    <br /><br />
+                </div>
+                <div id="author">
+                    Autor: {{ new.author }}
+                </div>
+                <div id="date">
+                    Data: {{ new.date|date('d/m/Y') }}
+                </div>
+                {% if is_granted('ROLE_ADMIN')  %}
+                    <div id="button">
+                        <a href="/news/delete/{{ new.titleRaw }}" class="button" id="delete">Usuń</a>
+                    </div>
+                {% endif %}
+    </div>
+{% endblock %}

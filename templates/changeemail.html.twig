@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}" type="text/css"/>
+{% endblock %}
+
+{% block content_header %}<h3>Zmień e-mail</h3>{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    {% set email = old_email %}
+    <div id="form">
+        <div id="email">
+                {{ form_label(form.email, 'Adres e-mail:') }}
+                {{ form_widget(form.email, {'attr': {'value': (email)}}) }}
+            </div>
+            {{ form_errors(form.email) }}
+        </div>
+        <div id="submit">
+            <button type="submit">Zmień e-mail</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+    {% for message in app.flashes('info') %}
+        <div class="info">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endblock %}

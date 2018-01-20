@@ -44,3 +44,15 @@ a:hover, a:visited, a:link, a:active {
 #new {
     padding: 10px 0 10px 0;
 }
+
+#author {
+    float: right;
+    font-style: italic;
+    font-weight: bold;
+}
+
+#date {
+    float: left;
+    font-style: italic;
+    font-weight: bold;
+}

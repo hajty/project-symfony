@@ -72,3 +72,4 @@ security:
         - { path: ^/user, roles: ROLE_USER}
         - { path: ^/admin, roles: ROLE_ADMIN}
         - { path: ^/news/add, roles: ROLE_ADMIN}
+        - { path: ^/news/delete, roles: ROLE_ADMIN}

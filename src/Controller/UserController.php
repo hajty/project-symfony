@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ChangeEmailType;
+use App\Form\ChangePasswordType;
 use App\Form\LoginType;
 use App\Form\RegisterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -77,14 +80,14 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/login", name="login")
+     * @Route("/login", name="user_login")
      */
     public function loginAction(Request $request, AuthenticationUtils $authUtils)
     {
         $user = new User();
         $form = $this->createForm(LoginType::class, $user);
-        $error = $authUtils->getLastAuthenticationError();                  // get the login error if there is one
-        $lastUsername = $authUtils->getLastUsername();                      // last username entered by the user
+        $error = $authUtils->getLastAuthenticationError();
+        $lastUsername = $authUtils->getLastUsername();
 
         $form->handleRequest($request);
 
@@ -96,5 +99,102 @@ class UserController extends Controller
                 'error'         => $error,
             )
         );
+    }
+
+    /**
+     * @Route("/user", name="userpage")
+     */
+    public function userpage(AuthorizationCheckerInterface $authChecker)
+    {
+        $username = "";
+        if ($authChecker->isGranted('ROLE_USER'))
+        {
+            $username = $this->getUser()->getLogin();
+        }
+        return $this->render('user.html.twig', Array('username' => $username));
+    }
+
+    /**
+     * @Route("/user/change-password", name="user_change-password")
+     */
+    public function changepassword(Request $request, AuthorizationCheckerInterface $authChecker,
+                                   UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $username = "";
+        if ($authChecker->isGranted('ROLE_USER'))
+        {
+            $username = $this->getUser()->getLogin();
+        }
+
+        $user = new User();
+        $form = $this->createForm(ChangePasswordType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted())
+        {
+            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+
+            $doctrine = $this->getDoctrine()->getManager();
+            $repository = $doctrine->getRepository(User::class);
+            $one = $repository->findOneBy(Array('login' => $this->getUser()->getLogin()));
+            $one->setPassword($password);
+            $doctrine->flush();
+
+            $this->addFlash(
+                'info',
+                'Hasło zostało zmienione.'
+            );
+        }
+
+        return $this->render('changepassword.html.twig', Array(
+            'username' => $username,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/user/change-email", name="user_change-email")
+     */
+    public function changeemail(Request $request, AuthorizationCheckerInterface $authChecker,
+                                   UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $username = "";
+        if ($authChecker->isGranted('ROLE_USER'))
+        {
+            $username = $this->getUser()->getLogin();
+        }
+
+        $user = new User();
+        $form = $this->createForm(ChangeEmailType::class, $user);
+
+        $doctrine = $this->getDoctrine()->getManager();
+        $repository = $doctrine->getRepository(User::class);
+        $one = $repository->findOneBy(Array('login' => $this->getUser()->getLogin()));
+        $old_email = $one->getEmail();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted())
+        {
+            $email = $user->getEmail();
+
+            $one->setEmail($email);
+            $doctrine->flush();
+
+            $this->addFlash(
+                'info',
+                'E-mail został zmieniony.'
+            );
+
+            return $this->redirectToRoute('user_change-email');
+        }
+
+        return $this->render('changeemail.html.twig', Array(
+            'username' => $username,
+            'form' => $form->createView(),
+            'old_email' => $old_email,
+        ));
     }
 }
